@@ -27,20 +27,187 @@ public class Dashboard_Admin extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        dashboard_Sidepannel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Drugs Management System");
+        setMinimumSize(new java.awt.Dimension(800, 800));
+        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 788, Short.MAX_VALUE)
+        dashboard_Sidepannel.setBackground(new java.awt.Color(0, 255, 204));
+        dashboard_Sidepannel.setMaximumSize(new java.awt.Dimension(200, 2147483647));
+        dashboard_Sidepannel.setPreferredSize(new java.awt.Dimension(200, 300));
+        dashboard_Sidepannel.setLayout(new java.awt.GridBagLayout());
+
+        jLabel1.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
+        jLabel1.setText("i");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 17;
+        gridBagConstraints.ipady = -13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 15, 0, 0);
+        dashboard_Sidepannel.add(jLabel1, gridBagConstraints);
+
+        jLabel2.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
+        jLabel2.setText("Company");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 15;
+        gridBagConstraints.ipady = -13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 0);
+        dashboard_Sidepannel.add(jLabel2, gridBagConstraints);
+
+        jLabel4.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
+        jLabel4.setText("Dashboard");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = -13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(53, 6, 0, 0);
+        dashboard_Sidepannel.add(jLabel4, gridBagConstraints);
+
+        jLabel5.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
+        jLabel5.setText("i");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 17;
+        gridBagConstraints.ipady = -13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(53, 15, 0, 0);
+        dashboard_Sidepannel.add(jLabel5, gridBagConstraints);
+
+        jLabel6.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
+        jLabel6.setText("i");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 27;
+        gridBagConstraints.ipady = -13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(39, 15, 0, 0);
+        dashboard_Sidepannel.add(jLabel6, gridBagConstraints);
+
+        jLabel7.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
+        jLabel7.setText("Products");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 19;
+        gridBagConstraints.ipady = -13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(39, 6, 0, 0);
+        dashboard_Sidepannel.add(jLabel7, gridBagConstraints);
+
+        jLabel8.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
+        jLabel8.setText("i");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 17;
+        gridBagConstraints.ipady = -13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(42, 15, 0, 0);
+        dashboard_Sidepannel.add(jLabel8, gridBagConstraints);
+
+        jLabel9.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
+        jLabel9.setText("Inventory");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipady = -13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(42, 6, 0, 0);
+        dashboard_Sidepannel.add(jLabel9, gridBagConstraints);
+
+        jLabel10.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
+        jLabel10.setText("History ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = -13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(51, 6, 0, 0);
+        dashboard_Sidepannel.add(jLabel10, gridBagConstraints);
+
+        jLabel11.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
+        jLabel11.setText("i");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 17;
+        gridBagConstraints.ipady = -13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(51, 15, 0, 0);
+        dashboard_Sidepannel.add(jLabel11, gridBagConstraints);
+
+        jLabel12.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
+        jLabel12.setText("Notification ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 8;
+        gridBagConstraints.ipady = -13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(32, 6, 179, 0);
+        dashboard_Sidepannel.add(jLabel12, gridBagConstraints);
+
+        jLabel13.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
+        jLabel13.setText("i");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipadx = 17;
+        gridBagConstraints.ipady = -13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(32, 15, 179, 0);
+        dashboard_Sidepannel.add(jLabel13, gridBagConstraints);
+
+        getContentPane().add(dashboard_Sidepannel);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 153));
+        jPanel1.setPreferredSize(new java.awt.Dimension(200, 100));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 748, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 350, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        getContentPane().add(jPanel1);
 
         pack();
         setLocationRelativeTo(null);
@@ -72,5 +239,19 @@ public class Dashboard_Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel dashboard_Sidepannel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
