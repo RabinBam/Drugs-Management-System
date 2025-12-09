@@ -4,6 +4,10 @@
  */
 package View;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+
 /**
  *
  * @author ASUS
@@ -17,6 +21,25 @@ public class Dashboard_Admin extends javax.swing.JFrame {
      */
     public Dashboard_Admin() {
         initComponents();
+        
+          model.PieChart pieChart = new model.PieChart();
+    double[] values = {50, 20, 15, 15};
+    String[] labels = {"Current Stock", "", "", ""};
+    Color[] colors = {Color.BLUE, Color.GREEN, Color.ORANGE, Color.RED};
+    pieChart.setData(values, labels, colors);
+
+    // Remove existing components in jPanel15 and set layout
+    jPanel15.removeAll();
+    jPanel15.setLayout(new BorderLayout());
+    jPanel15.add(pieChart, BorderLayout.CENTER);
+
+    // Expand panel size (important!)
+    jPanel15.setPreferredSize(new Dimension(300, 300));
+
+    // Refresh
+    jPanel15.revalidate();
+    jPanel15.repaint();
+        
     }
 
     /**
@@ -383,6 +406,24 @@ public class Dashboard_Admin extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         jPanel9.add(jPanel15, gridBagConstraints);
+        // --- Add PieChart to jPanel15 ---
+        model.PieChart pieChart = new model.PieChart();
+
+        // Dummy values for showcase
+        double[] values = {50, 20, 15, 15};
+        String[] labels = {"Current Stock", "", "", ""};  // only first slice labeled
+        Color[] colors = {Color.BLUE, Color.GREEN, Color.ORANGE, Color.RED};
+
+        // Set data
+        pieChart.setData(values, labels, colors);
+
+        // Add to panel and make it fill
+        jPanel15.setLayout(new BorderLayout());
+        jPanel15.add(pieChart, BorderLayout.CENTER);
+
+        // Refresh panel
+        jPanel15.revalidate();
+        jPanel15.repaint();
 
         jPanel16.setBackground(new java.awt.Color(255, 255, 0));
 
