@@ -5,23 +5,21 @@ import javax.swing.*;
 
 public class PieChart extends JPanel {
 
-    private double[] values;    // The values for the pie slices
-    private Color[] colors;     // The colors for each slice
-    private String[] labels;    // Labels for each slice
+    private double[] values;
+    private Color[] colors;
+    private String[] labels;
 
     public PieChart() {
-        // Dummy data for showcase (values only, labels empty for now)
-        values = new double[]{40, 30, 20, 10};         
-        labels = new String[values.length];            // empty labels
-        colors = new Color[]{Color.BLUE, Color.GREEN, Color.ORANGE, Color.RED};       
-        setPreferredSize(new Dimension(400, 300));
+        // Updated to match wireframe "Retail vs Wholesale" style
+        values = new double[]{70, 30};         
+        labels = new String[]{"Retail", "Wholesale"};
+        // Cyan and Light Gray to match your glass theme
+        colors = new Color[]{new Color(0, 255, 255), new Color(200, 200, 200)};       
+        setPreferredSize(new Dimension(200, 150));
+        setOpaque(false); // Crucial for Glass Design
     }
 
-    // Allow setting values dynamically
     public void setData(double[] values, String[] labels, Color[] colors) {
-        if (values.length != labels.length || values.length != colors.length) {
-            throw new IllegalArgumentException("Arrays must have the same length");
-        }
         this.values = values;
         this.labels = labels;
         this.colors = colors;
@@ -38,40 +36,27 @@ public class PieChart extends JPanel {
 
         int width = getWidth();
         int height = getHeight();
-        int diameter = Math.min(width, height) - 50;
-
-        // 3D effect offset
-        int offsetY = 20;
+        int diameter = Math.min(width, height) - 40;
 
         double total = 0;
         for (double v : values) total += v;
 
-        double curAngle = 0;
+        double curAngle = 90; // Start from top
         for (int i = 0; i < values.length; i++) {
             double angle = values[i] / total * 360;
 
-            // Draw 3D-like "side"
-            g2.setColor(colors[i].darker());
-            g2.fillArc((width - diameter) / 2, (height - diameter) / 2 + offsetY, diameter, diameter, (int) curAngle, (int) angle);
-
-            // Draw top
             g2.setColor(colors[i]);
-            g2.fillArc((width - diameter) / 2, (height - diameter) / 2, diameter, diameter, (int) curAngle, (int) angle);
+            g2.fillArc(10, (height - diameter) / 2, diameter, diameter, (int) curAngle, (int) angle);
 
-            curAngle += angle;
-        }
+            // Draw Legend (Small boxes on the right)
+            int legendX = diameter + 30;
+            int legendY = 30 + (i * 25);
+            g2.fillRect(legendX, legendY, 15, 15);
+            
+            g2.setColor(Color.WHITE);
+            g2.setFont(new Font("SansSerif", Font.PLAIN, 12));
+            g2.drawString(labels[i], legendX + 25, legendY + 12);
 
-        // Draw labels (only if they are not empty)
-        curAngle = 0;
-        for (int i = 0; i < values.length; i++) {
-            double angle = values[i] / total * 360;
-            if (labels[i] != null && !labels[i].isEmpty()) {
-                double rad = Math.toRadians(curAngle + angle / 2);
-                int x = (int) (width / 2 + Math.cos(rad) * diameter / 2.5);
-                int y = (int) (height / 2 + Math.sin(rad) * diameter / 2.5);
-                g2.setColor(Color.BLACK);
-                g2.drawString(labels[i], x - 20, y);
-            }
             curAngle += angle;
         }
     }
