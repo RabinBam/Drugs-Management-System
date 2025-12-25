@@ -11,6 +11,7 @@ import javax.swing.*;
  * @author ASUS
  */
 public class ProductEntryForm extends javax.swing.JPanel {
+    private Controller.DrugController controller;
 
     /**
      * Creates new form ProductEntryForm
@@ -19,7 +20,11 @@ public class ProductEntryForm extends javax.swing.JPanel {
         initComponents();
         applyGlassTheme();
     }
-
+public ProductEntryForm(Controller.DrugController controller) {
+        this.controller = controller; // Assign the controller
+        initComponents();
+        applyGlassTheme();
+    }
 public final void applyGlassTheme() {
     this.setOpaque(false);
     Color cyan = new Color(0, 255, 255);
@@ -126,11 +131,11 @@ public final void applyGlassTheme() {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton1))
                 .addContainerGap(245, Short.MAX_VALUE))
         );
@@ -162,7 +167,43 @@ public final void applyGlassTheme() {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+try {
+        String name = jTextField1.getText().trim();
+        int stock = (Integer) jSpinner1.getValue();
+        String vendor = jTextField2.getText().trim();
+        String costText = jTextField3.getText().trim();
 
+        // Check for Empty Strings
+        if (name.isEmpty() || vendor.isEmpty() || costText.isEmpty()) {
+            throw new IllegalArgumentException("All fields must be filled out!");
+        }
+
+        // Validate Stock
+        if (stock <= 0) {
+            throw new IllegalArgumentException("Stock must be at least 1 unit.");
+        }
+
+        // Validate Cost
+        double cost = Double.parseDouble(costText);
+        if (cost <= 0) {
+            throw new IllegalArgumentException("Cost must be a positive number.");
+        }
+
+        // If all validations pass, add to controller
+        controller.addDrug(name, stock, vendor, cost);
+        JOptionPane.showMessageDialog(this, "Product Added Successfully!");
+        
+        // Reset form
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jSpinner1.setValue(0);
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid Price: Please enter a decimal number.", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (IllegalArgumentException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage(), "Validation Error", JOptionPane.WARNING_MESSAGE);
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

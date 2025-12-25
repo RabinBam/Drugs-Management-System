@@ -32,6 +32,12 @@ private Controller.DrugController controller = new Controller.DrugController(dru
         originalDashboardContent = jPanel1;
 
     }
+    
+    public Dashboard_Admin(Controller.DrugController controller) {
+        this.controller = controller;
+        initComponents();
+        customizeDashboard();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,12 +90,13 @@ private Image loadBackgroundImage(String path) {
 }
 
 private void customizeDashboard() {
-    // 1. Set Frame and Global Styling
+    // 1. Global Styling
     this.getContentPane().setBackground(new Color(15, 25, 30)); 
     UIManager.put("TitledBorder.font", new Font("SansSerif", Font.BOLD, 18));
     UIManager.put("TitledBorder.titleColor", new Color(0, 255, 255));
     
-    // 2. Clear and Setup the main grid (jPanel21)
+    // 2. Setup the main grid (jPanel1 is usually the main container in your file)
+    // If your center area is jPanel21, keep it, otherwise use jPanel1
     jPanel21.removeAll();
     jPanel21.setLayout(new java.awt.GridBagLayout());
     jPanel21.setOpaque(false);
@@ -99,14 +106,14 @@ private void customizeDashboard() {
     gbc.fill = java.awt.GridBagConstraints.BOTH;
 
     // --- ROW 0 ---
-    // Top Left: Sales Table 
+    // Top Left: Sales/Product Table (Live View)
     gbc.gridx = 0; gbc.gridy = 0;
     gbc.weightx = 0.65; gbc.weighty = 0.5;
     jPanel21.add(createTopSalesPanel(), gbc);
 
-    // Top Right: Summary Cards 
+    // Top Right: Summary Cards (Live Totals)
     gbc.gridx = 1; gbc.gridy = 0;
-    gbc.weightx = 0.35; gbc.weighty = 0.2;
+    gbc.weightx = 0.35; gbc.weighty = 0.5;
     jPanel21.add(createSummaryPanel(), gbc);
 
     // --- ROW 1 ---
@@ -117,7 +124,7 @@ private void customizeDashboard() {
 
     // Bottom Right: Payment & Progress 
     gbc.gridx = 1; gbc.gridy = 1;
-    gbc.weightx = 0.35; gbc.weighty = 0.8;
+    gbc.weightx = 0.35; gbc.weighty = 0.5;
     JPanel rightColumnBottom = new JPanel(new GridLayout(2, 1, 0, 15));
     rightColumnBottom.setOpaque(false);
     rightColumnBottom.add(createPaymentPanel());
@@ -766,9 +773,16 @@ private void refreshPanel() {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-   jPanel1.removeAll();
-    // Re-setup the grid inside jPanel1
+// This is the "Dashboard" button
+    jPanel1.removeAll(); // Or jPanel21 depending on your design
+    jPanel1.setLayout(new BorderLayout()); 
+    
+    // This re-runs the code above, fetching fresh data from the controller
     customizeDashboard(); 
+    
+    // Add the refreshed grid back to the main container
+    jPanel1.add(jPanel21, BorderLayout.CENTER);
+    
     jPanel1.revalidate();
     jPanel1.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -792,6 +806,18 @@ private void refreshPanel() {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
+        jPanel1.removeAll();
+    jPanel1.setLayout(new BorderLayout());
+    
+    // Pass the controller that is already defined in Dashboard_Admin
+    ProductEntryForm entryForm = new ProductEntryForm(this.controller); 
+    
+    jPanel1.add(entryForm, BorderLayout.CENTER);
+    
+    // Refresh the UI
+    jPanel1.revalidate();
+    jPanel1.repaint();
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

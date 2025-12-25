@@ -7,6 +7,9 @@
  *
  * @author ASUS
  */
+import View.Dashboard_Admin;
+import java.awt.*;
+import javax.swing.*;
 public class LoginPage extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginPage.class.getName());
@@ -249,7 +252,25 @@ private void applyFrameBackgroundImage() {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+String username = jTextField2.getText().trim();
+    String password = jTextField1.getText().trim();
+
+    // Use .equals() for string comparison, never ==
+    if (username.equals("admin") && password.equals("1234")) {
+        JOptionPane.showMessageDialog(this, "Login Successful!");
+        
+        // 1. Create the data models here ONCE
+        Model.DrugModel drugModel = new Model.DrugModel(); 
+        Controller.DrugController controller = new Controller.DrugController(drugModel);
+        
+        // 2. Pass the controller to the dashboard
+        Dashboard_Admin adminDash = new Dashboard_Admin(controller);
+        adminDash.setVisible(true);
+        
+        this.dispose(); // Close the login screen
+    } else {
+        JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Login Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

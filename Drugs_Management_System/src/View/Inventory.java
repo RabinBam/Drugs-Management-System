@@ -97,6 +97,11 @@ public class Inventory extends javax.swing.JPanel {
         });
 
         jButton2.setText("Delete");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -132,8 +137,58 @@ public class Inventory extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+    
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Select a row to update.");
+        return;
+    }
+
+    try {
+        // Show input dialogs for new values (Simplified for now)
+        String newName = JOptionPane.showInputDialog(this, "Enter New Name:", jTable1.getValueAt(selectedRow, 0));
+        String newStockStr = JOptionPane.showInputDialog(this, "Enter New Stock:", jTable1.getValueAt(selectedRow, 1));
+        String newVendor = JOptionPane.showInputDialog(this, "Enter New Vendor:", jTable1.getValueAt(selectedRow, 2));
+        String newCostStr = JOptionPane.showInputDialog(this, "Enter New Cost:", jTable1.getValueAt(selectedRow, 3));
+
+        // --- VALIDATION ---
+        if (newName == null || newName.trim().isEmpty()) throw new Exception("Name cannot be empty.");
+        
+        int newStock = Integer.parseInt(newStockStr);
+        if (newStock < 0) throw new Exception("Stock cannot be negative.");
+        
+        double newCost = Double.parseDouble(newCostStr);
+        if (newCost <= 0) throw new Exception("Cost must be greater than zero.");
+
+        // Update via controller
+        controller.editDrug(selectedRow, newName, newStock, newVendor, newCost);
+        loadData(controller); // Refresh Table
+        JOptionPane.showMessageDialog(this, "Update successful!");
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Error: Please enter valid numbers for stock and cost.", "Input Error", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Validation Error", JOptionPane.WARNING_MESSAGE);
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+    int selectedRow = jTable1.getSelectedRow();
+    
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a product to delete.");
+        return;
+    }
+
+    int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this product?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+    
+    if (confirm == JOptionPane.YES_OPTION) {
+        controller.removeDrug(selectedRow); // Remove from Controller
+        loadData(controller); // Refresh Table
+        JOptionPane.showMessageDialog(this, "Product deleted successfully.");
+    }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
