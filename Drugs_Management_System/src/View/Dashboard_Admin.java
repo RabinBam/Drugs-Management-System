@@ -19,6 +19,9 @@ import javax.swing.*;
 public class Dashboard_Admin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Dashboard_Admin.class.getName());
+    private JPanel originalDashboardContent; // To store the Over-view UI
+private Model.DrugModel drugModel = new Model.DrugModel();
+private Controller.DrugController controller = new Controller.DrugController(drugModel);
 
     /**
      * Creates new form Dashboard_Admin
@@ -26,28 +29,8 @@ public class Dashboard_Admin extends javax.swing.JFrame {
     public Dashboard_Admin() {
         initComponents();
         customizeDashboard();
-        //setupBackgroundLayer(); 
-    //Pie chart below code
-    /**
-    model.PieChart pieChart = new model.PieChart();
-    double[] values = {50, 20, 15, 15};
-    String[] labels = {"Current Stock", "", "", ""};
-    Color[] colors = {Color.BLUE, Color.GREEN, Color.ORANGE, Color.RED};
-    pieChart.setData(values, labels, colors);
+        originalDashboardContent = jPanel21;
 
-    // Remove existing components in jPanel15 and set layout
-    jPanel15.removeAll();
-    jPanel15.setLayout(new BorderLayout());
-    jPanel15.add(pieChart, BorderLayout.CENTER);
-
-    // Expand panel size (important!)
-    jPanel15.setPreferredSize(new Dimension(300, 300));
-
-    // Refresh
-    jPanel15.revalidate();
-    jPanel15.repaint();
-    
-        **/
     }
 
     /**
@@ -778,7 +761,15 @@ private ImageIcon loadAndScaleImage(String path, int maxWidth, int maxHeight) {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+     jPanel1.removeAll();
+    jPanel1.setLayout(new BorderLayout());
+    
+    jPanel1.add(jPanel14, BorderLayout.NORTH); // Profile header
+    jPanel1.add(jLabel1, BorderLayout.CENTER); // "Over-view" title
+    jPanel1.add(originalDashboardContent, BorderLayout.SOUTH); // Dashboard Grid
+    
+    jPanel1.revalidate();
+    jPanel1.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -794,7 +785,18 @@ private ImageIcon loadAndScaleImage(String path, int maxWidth, int maxHeight) {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+
+  View.ProductEntryForm entryForm = new View.ProductEntryForm();
+    entryForm.applyGlassTheme();
+
+    jPanel1.removeAll();
+    jPanel1.setLayout(new BorderLayout());
+    // Use CENTER to ensure it scales to fill the entire jPanel1
+    jPanel1.add(entryForm, BorderLayout.CENTER);
+
+    jPanel1.revalidate();
+    jPanel1.repaint();
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

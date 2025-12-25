@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package View;
+import java.awt.*;
+import javax.swing.*;
 
 /**
  *
@@ -15,8 +17,33 @@ public class ProductEntryForm extends javax.swing.JPanel {
      */
     public ProductEntryForm() {
         initComponents();
+        applyGlassTheme();
     }
 
+public void applyGlassTheme() {
+    this.setOpaque(false);
+    Color cyan = new Color(0, 255, 255);
+    Color glassBg = new Color(20, 40, 50, 180);
+
+    // Style the title
+    jLabel1.setForeground(cyan);
+    jLabel1.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 36));
+
+    // Style the internal panels and labels
+    JPanel[] panels = {jPanel1, jPanel2, jPanel3, jPanel4};
+    JLabel[] labels = {jLabel2, jLabel3, jLabel4, jLabel5};
+    
+    for (int i = 0; i < panels.length; i++) {
+        panels[i].setOpaque(false);
+        labels[i].setForeground(new Color(200, 200, 200));
+        labels[i].setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 18));
+    }
+
+    // Style the Submit Button
+    jButton1.setBackground(cyan);
+    jButton1.setForeground(new Color(15, 25, 30));
+    jButton1.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 18));
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,7 +162,17 @@ public class ProductEntryForm extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+      
+    String name = jTextField1.getText();
+    int stock = (Integer) jSpinner1.getValue();
+    String vendor = jTextField2.getText();
+    double cost = Double.parseDouble(jTextField3.getText());
+
+    // Logic to save
+    // dashboard.getController().addDrug(name, stock, vendor, cost);
+    
+    javax.swing.JOptionPane.showMessageDialog(this, "Product Saved Successfully!");
+}
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
