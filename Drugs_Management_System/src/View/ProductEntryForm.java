@@ -20,7 +20,7 @@ public class ProductEntryForm extends javax.swing.JPanel {
         applyGlassTheme();
     }
 
-public void applyGlassTheme() {
+public final void applyGlassTheme() {
     this.setOpaque(false);
     Color cyan = new Color(0, 255, 255);
     Color glassBg = new Color(20, 40, 50, 180);
@@ -162,17 +162,7 @@ public void applyGlassTheme() {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      
-    String name = jTextField1.getText();
-    int stock = (Integer) jSpinner1.getValue();
-    String vendor = jTextField2.getText();
-    double cost = Double.parseDouble(jTextField3.getText());
 
-    // Logic to save
-    // dashboard.getController().addDrug(name, stock, vendor, cost);
-    
-    javax.swing.JOptionPane.showMessageDialog(this, "Product Saved Successfully!");
-}
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

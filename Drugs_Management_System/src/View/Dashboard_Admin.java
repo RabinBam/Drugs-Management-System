@@ -29,7 +29,7 @@ private Controller.DrugController controller = new Controller.DrugController(dru
     public Dashboard_Admin() {
         initComponents();
         customizeDashboard();
-        originalDashboardContent = jPanel21;
+        originalDashboardContent = jPanel1;
 
     }
 
@@ -377,6 +377,11 @@ private ImageIcon loadAndScaleImage(String path, int maxWidth, int maxHeight) {
 
     Image scaledImg = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
     return new ImageIcon(scaledImg);
+}
+
+private void refreshPanel() {
+    jPanel1.revalidate();
+    jPanel1.repaint();
 }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -761,19 +766,20 @@ private ImageIcon loadAndScaleImage(String path, int maxWidth, int maxHeight) {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-     jPanel1.removeAll();
-    jPanel1.setLayout(new BorderLayout());
-    
-    jPanel1.add(jPanel14, BorderLayout.NORTH); // Profile header
-    jPanel1.add(jLabel1, BorderLayout.CENTER); // "Over-view" title
-    jPanel1.add(originalDashboardContent, BorderLayout.SOUTH); // Dashboard Grid
-    
+   jPanel1.removeAll();
+    // Re-setup the grid inside jPanel1
+    customizeDashboard(); 
     jPanel1.revalidate();
     jPanel1.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+    jPanel1.removeAll();
+    jPanel1.setLayout(new BorderLayout());
+    Inventory inv = new Inventory(this.controller); 
+    jPanel1.add(inv, BorderLayout.CENTER);
+    jPanel1.revalidate();
+    jPanel1.repaint();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -785,17 +791,6 @@ private ImageIcon loadAndScaleImage(String path, int maxWidth, int maxHeight) {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
-  View.ProductEntryForm entryForm = new View.ProductEntryForm();
-    entryForm.applyGlassTheme();
-
-    jPanel1.removeAll();
-    jPanel1.setLayout(new BorderLayout());
-    // Use CENTER to ensure it scales to fill the entire jPanel1
-    jPanel1.add(entryForm, BorderLayout.CENTER);
-
-    jPanel1.revalidate();
-    jPanel1.repaint();
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
