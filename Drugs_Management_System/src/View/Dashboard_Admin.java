@@ -396,7 +396,6 @@ private void refreshPanel() {
 
         dashboard_Sidepannel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
-        jLabel28 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
@@ -431,16 +430,6 @@ private void refreshPanel() {
         jPanel9.setOpaque(false);
         jPanel9.setPreferredSize(new java.awt.Dimension(200, 89));
 
-        jLabel28.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
-        jLabel28.setText("i");
-        ImageIcon scaledIcon = loadAndScaleImage("/images/logo3.png", 30, 35);
-
-        if (scaledIcon != null) {
-            jLabel28.setIcon(scaledIcon);
-            jLabel28.setPreferredSize(new Dimension(scaledIcon.getIconWidth(), scaledIcon.getIconHeight()));
-        }
-        jLabel28.setText("");
-
         jButton1.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
         jButton1.setText("DMS");
         jButton1.setBorderPainted(false);
@@ -458,20 +447,10 @@ private void refreshPanel() {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                    .addContainerGap(10, Short.MAX_VALUE)
-                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(168, Short.MAX_VALUE)))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
-            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                    .addContainerGap(24, Short.MAX_VALUE)
-                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(30, Short.MAX_VALUE)))
         );
 
         dashboard_Sidepannel.add(jPanel9);
@@ -854,7 +833,6 @@ private void refreshPanel() {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
