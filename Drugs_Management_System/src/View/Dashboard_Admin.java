@@ -90,60 +90,66 @@ private Image loadBackgroundImage(String path) {
 }
 
 private void customizeDashboard() {
-    // 1. Global Styling
-    this.getContentPane().setBackground(new Color(15, 25, 30)); 
-    UIManager.put("TitledBorder.font", new Font("SansSerif", Font.BOLD, 18));
-    UIManager.put("TitledBorder.titleColor", new Color(0, 255, 255));
-    
-    // 2. Setup the main grid (jPanel1 is usually the main container in your file)
-    // If your center area is jPanel21, keep it, otherwise use jPanel1
-    jPanel21.removeAll();
-    jPanel21.setLayout(new java.awt.GridBagLayout());
+    // 1. Core Deep Dark Palette
+    Color darkBg = new Color(15, 20, 25);        // Background
+    Color panelBg = new Color(25, 35, 45);       // Surfaces
+    Color accentTeal = new Color(0, 255, 213);   // Vibrant Medical Accent
+    Color mainText = new Color(240, 240, 240);   // Bright White/Grey Text
+    Color secondaryText = new Color(150, 160, 170); // Muted Text
+
+    // 2. Set Frame Background
+    this.getContentPane().setBackground(darkBg);
     jPanel21.setOpaque(false);
 
-    java.awt.GridBagConstraints gbc = new java.awt.GridBagConstraints();
+    // 3. Grid Layout (Replicating the "Over-View" Grid)
+    jPanel21.removeAll();
+    jPanel21.setLayout(new GridBagLayout());
+    GridBagConstraints gbc = new GridBagConstraints();
     gbc.insets = new java.awt.Insets(12, 12, 12, 12);
-    gbc.fill = java.awt.GridBagConstraints.BOTH;
+    gbc.fill = GridBagConstraints.BOTH;
 
-    // --- ROW 0 ---
-    // Top Left: Sales/Product Table (Live View)
-    gbc.gridx = 0; gbc.gridy = 0;
-    gbc.weightx = 0.65; gbc.weighty = 0.5;
+    // --- LEFT COLUMN (65% Width) ---
+    gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.65; gbc.weighty = 0.6;
     jPanel21.add(createTopSalesPanel(), gbc);
 
-    // Top Right: Summary Cards (Live Totals)
-    gbc.gridx = 1; gbc.gridy = 0;
-    gbc.weightx = 0.35; gbc.weighty = 0.5;
-    jPanel21.add(createSummaryPanel(), gbc);
-
-    // --- ROW 1 ---
-    // Bottom Left: Calendar
-    gbc.gridx = 0; gbc.gridy = 1;
-    gbc.weightx = 0.65; gbc.weighty = 0.5;
+    gbc.gridy = 1; gbc.weighty = 0.4;
     jPanel21.add(createCalendarPanel(), gbc);
 
-    // Bottom Right: Payment & Progress 
-    gbc.gridx = 1; gbc.gridy = 1;
-    gbc.weightx = 0.35; gbc.weighty = 0.5;
-    JPanel rightColumnBottom = new JPanel(new GridLayout(2, 1, 0, 15));
-    rightColumnBottom.setOpaque(false);
-    rightColumnBottom.add(createPaymentPanel());
-    rightColumnBottom.add(createProgressPanel());
-    jPanel21.add(rightColumnBottom, gbc);
+    // --- RIGHT COLUMN (35% Width) ---
+    JPanel rightCol = new JPanel(new GridLayout(3, 1, 0, 15));
+    rightCol.setOpaque(false);
+    
+    // Summary Cards (Sales & Earning)
+    rightCol.add(createSummaryPanel());
+    rightCol.add(createPaymentPanel());
+    rightCol.add(createProgressPanel());
+
+    gbc.gridx = 1; gbc.gridy = 0; gbc.gridheight = 2; gbc.weightx = 0.35;
+    jPanel21.add(rightCol, gbc);
+
+    // 4. Sidebar Styling
+    dashboard_Sidepannel.setBackground(new Color(10, 12, 15));
+    styleSidebarButtons(accentTeal);
 
     jPanel21.revalidate();
     jPanel21.repaint();
 }
+
 private JPanel createGlassPanel() {
     return new JPanel() {
         @Override
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(new Color(20, 40, 50, 200)); 
-            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
-            g2.setColor(new Color(0, 255, 255, 120));
-            g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+            
+            // Darker Glass Background for better contrast
+            g2.setColor(new Color(25, 35, 45, 230)); 
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+            
+            // Neon Glow Border
+            g2.setColor(new Color(0, 255, 213, 80)); 
+            g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
+            
             g2.dispose();
         }
     };
@@ -153,40 +159,43 @@ private JPanel createSummaryPanel() {
     // Reduced height container
     JPanel container = new JPanel(new GridLayout(1, 2, 10, 0));
     container.setOpaque(false);
-    container.setPreferredSize(new Dimension(300, 100)); // Constrain the size
+    // Setting preferred size helps the layout manager respect your space constraints
+    container.setPreferredSize(new Dimension(300, 120)); 
 
-    container.add(createStyledCard("/images/basket.png", "Sales", "100,000 pcs"));
-    container.add(createStyledCard("/images/money_bag.png", "Earning", "RS. 30,000"));
+    container.add(createStyledCard("Sales", "100,000 pcs"));
+    container.add(createStyledCard("Earning", "RS. 30,000"));
 
     return container;
 }
-private JPanel createStyledCard(String iconPath, String title, String value) {
-    JPanel card = createGlassPanel();
-    card.setLayout(new BorderLayout(8, 0));
-    card.setBorder(BorderFactory.createEmptyBorder(8, 12, 8, 12));
 
-    // Smaller icon for a more compact "Earning/Sales" look
-    JLabel iconLabel = new JLabel(loadAndScaleImage(iconPath, 25, 25));
+private JPanel createStyledCard(String title, String value) {
+    // Using BoxLayout for vertical stacking
+    JPanel card = new JPanel();
+    card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
     
-    JPanel textPanel = new JPanel();
-    textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
-    textPanel.setOpaque(false);
+    // Deep Dark Medical Palette
+    card.setBackground(new Color(25, 35, 45)); 
+    card.setBorder(BorderFactory.createCompoundBorder(
+        BorderFactory.createLineBorder(new Color(0, 255, 213, 60), 1), // Subtle Teal Glow
+        BorderFactory.createEmptyBorder(15, 15, 15, 15)
+    ));
 
-    JLabel titleLabel = new JLabel(title);
-    titleLabel.setFont(new Font("SansSerif", Font.PLAIN, 11));
-    titleLabel.setForeground(new Color(180, 180, 180));
+    // 1. Title Label - Now LARGER (20pt)
+    JLabel lblTitle = new JLabel(title.toUpperCase());
+    lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20)); // Increased from 11 to 20
+    lblTitle.setForeground(new Color(150, 160, 170));     // Muted Slate Grey
+    lblTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-    JLabel valueLabel = new JLabel(value);
-    valueLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
-    valueLabel.setForeground(Color.CYAN);
+    // 2. Value Label - Now relatively SMALLER (18pt)
+    JLabel lblValue = new JLabel(value);
+    lblValue.setFont(new Font("Segoe UI", Font.PLAIN, 18)); // Changed to PLAIN and 18pt
+    lblValue.setForeground(new Color(0, 255, 213));        // Vibrant Medical Cyan
+    lblValue.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-    textPanel.add(Box.createVerticalGlue());
-    textPanel.add(titleLabel);
-    textPanel.add(valueLabel);
-    textPanel.add(Box.createVerticalGlue());
-
-    card.add(iconLabel, BorderLayout.WEST);
-    card.add(textPanel, BorderLayout.CENTER);
+    // Add components with a fixed gap
+    card.add(lblTitle);
+    card.add(Box.createRigidArea(new Dimension(0, 8))); // Space between Title and Value
+    card.add(lblValue);
 
     return card;
 }
@@ -272,6 +281,7 @@ private JPanel createProgressPanel() {
     panel.add(chart, BorderLayout.CENTER);
     return panel;
 }
+
 private JPanel createTopSalesPanel() {
     JPanel panel = createGlassPanel();
     panel.setLayout(new BorderLayout());
@@ -360,35 +370,56 @@ private JPanel createCalendarPanel() {
     
     return panel;
 }
-private ImageIcon loadAndScaleImage(String path, int maxWidth, int maxHeight) {
-    java.net.URL imgUrl = getClass().getResource(path);
-    if (imgUrl == null) {
-        System.err.println("Resource not found: " + path);
+
+private ImageIcon loadAndScaleImage(String path, int w, int h) {
+    try {
+        java.net.URL url = getClass().getResource(path);
+        if (url == null) return null;
+        Image img = new ImageIcon(url).getImage();
+        // High quality scaling
+        return new ImageIcon(img.getScaledInstance(w, h, Image.SCALE_SMOOTH));
+    } catch (Exception e) {
         return null;
     }
-    
-    ImageIcon icon = new ImageIcon(imgUrl);
-    Image img = icon.getImage();
-
-    int w = img.getWidth(null);
-    int h = img.getHeight(null);
-
-    if (w <= 0 || h <= 0) {
-        System.err.println("Invalid image dimensions.");
-        return icon;
-    }
-
-    double ratio = Math.min((double) maxWidth / w, (double) maxHeight / h);
-    int newW = (int) (w * ratio);
-    int newH = (int) (h * ratio);
-
-    Image scaledImg = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
-    return new ImageIcon(scaledImg);
 }
 
 private void refreshPanel() {
     jPanel1.revalidate();
     jPanel1.repaint();
+}
+
+private void styleSidebar() {
+    dashboard_Sidepannel.setBackground(new Color(15, 20, 25)); // Dark sidebar
+    Component[] sideComps = dashboard_Sidepannel.getComponents();
+    for (Component c : sideComps) {
+        if (c instanceof JPanel) {
+            ((JPanel) c).setOpaque(false);
+            for (Component inner : ((JPanel) c).getComponents()) {
+                if (inner instanceof JButton) {
+                    JButton btn = (JButton) inner;
+                    btn.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+                    btn.setForeground(new Color(200, 200, 200));
+                    // Add mouse listener for hover effect if you want extra interaction
+                }
+            }
+        }
+    }
+}
+
+private void styleSidebarButtons(Color accentColor) {
+    for (Component c : dashboard_Sidepannel.getComponents()) {
+        if (c instanceof JButton) {
+            JButton btn = (JButton) c;
+            btn.setForeground(Color.WHITE);
+            btn.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+            btn.setFocusPainted(false);
+            btn.setContentAreaFilled(false);
+            btn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 10));
+            btn.setHorizontalAlignment(SwingConstants.LEFT);
+            
+            // Hover effect logic can be added here
+        }
+    }
 }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -407,7 +438,6 @@ private void refreshPanel() {
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel21 = new javax.swing.JPanel();
@@ -587,14 +617,9 @@ private void refreshPanel() {
 
         jPanel14.setOpaque(false);
 
-        jLabel7.setIcon(loadAndScaleImage("/images/logo3.png", 30, 35));
-        jLabel7.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("i");
-
         jButton6.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Profile");
+        jButton6.setText("Admin");
         jButton6.setBorderPainted(false);
         jButton6.setContentAreaFilled(false);
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -608,26 +633,16 @@ private void refreshPanel() {
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel14Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
-            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel14Layout.createSequentialGroup()
-                    .addGap(1, 1, 1)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
-                    .addGap(1, 1, 1)))
+                .addGap(1, 1, 1)
+                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addGap(1, 1, 1))
         );
 
         jLabel1.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 48)); // NOI18N
@@ -655,7 +670,7 @@ private void refreshPanel() {
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 884, Short.MAX_VALUE)
+            .addGap(0, 1087, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -694,7 +709,7 @@ private void refreshPanel() {
                     .addGroup(jPanel21Layout.createSequentialGroup()
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE))
+                        .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 1087, Short.MAX_VALUE))
                     .addGroup(jPanel21Layout.createSequentialGroup()
                         .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
@@ -785,18 +800,16 @@ private void refreshPanel() {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        jPanel1.removeAll();
+    jPanel1.removeAll();
     jPanel1.setLayout(new BorderLayout());
     
-    // Pass the controller that is already defined in Dashboard_Admin
-    ProductEntryForm entryForm = new ProductEntryForm(this.controller); 
+    // Load the List View first, matching the image provided
+    ProductListPanel listPanel = new ProductListPanel(this.controller); 
     
-    jPanel1.add(entryForm, BorderLayout.CENTER);
+    jPanel1.add(listPanel, BorderLayout.CENTER);
     
-    // Refresh the UI
     jPanel1.revalidate();
     jPanel1.repaint();
-        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -833,7 +846,6 @@ private void refreshPanel() {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;

@@ -10,13 +10,13 @@ public class PieChart extends JPanel {
     private String[] labels;
 
     public PieChart() {
-        // Updated to match wireframe "Retail vs Wholesale" style
+       
         values = new double[]{70, 30};         
         labels = new String[]{"Retail", "Wholesale"};
-        // Cyan and Light Gray to match your glass theme
+       
         colors = new Color[]{new Color(0, 255, 255), new Color(200, 200, 200)};       
         setPreferredSize(new Dimension(200, 150));
-        setOpaque(false); // Crucial for Glass Design
+        setOpaque(false);
     }
 
     public void setData(double[] values, String[] labels, Color[] colors) {
