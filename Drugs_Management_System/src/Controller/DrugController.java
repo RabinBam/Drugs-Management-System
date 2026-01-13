@@ -31,4 +31,9 @@ public class DrugController {
     public void editDrug(int index, String name, int stock, String vendor, double cost) {
         model.updateDrug(index, new Drug(name, stock, vendor, cost));
     }
+    
+    public Model.DrugModel getModel() {
+    return this.model;
+}
+    
 }

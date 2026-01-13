@@ -35,8 +35,8 @@ public final void applyGlassTheme() {
     jLabel1.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 36));
 
     // Style the internal panels and labels
-    JPanel[] panels = {jPanel1, jPanel2, jPanel3, jPanel4};
-    JLabel[] labels = {jLabel2, jLabel3, jLabel4, jLabel5};
+    JPanel[] panels = {jPanel1, jPanel2, jPanel3, jPanel4,jPanel5};
+    JLabel[] labels = {jLabel2, jLabel3, jLabel4, jLabel5,jLabel7};
     
     for (int i = 0; i < panels.length; i++) {
         panels[i].setOpaque(false);
@@ -123,6 +123,7 @@ public final void applyGlassTheme() {
         jTextField3.setVerifyInputWhenFocusTarget(false);
         jPanel4.add(jTextField3, java.awt.BorderLayout.PAGE_END);
 
+        jPanel5.setOpaque(false);
         jPanel5.setPreferredSize(new java.awt.Dimension(415, 85));
         jPanel5.setLayout(new java.awt.BorderLayout());
         jPanel5.add(jTextField4, java.awt.BorderLayout.PAGE_END);
@@ -140,7 +141,7 @@ public final void applyGlassTheme() {
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
         jButton2.setText("Upload Image");
 
@@ -166,12 +167,12 @@ public final void applyGlassTheme() {
                                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(87, 87, 87)
+                                        .addGap(114, 114, 114)
                                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(151, 151, 151)
+                                        .addGap(181, 181, 181)
                                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(323, Short.MAX_VALUE))))
+                        .addContainerGap(296, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,7 +192,7 @@ public final void applyGlassTheme() {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jButton1)

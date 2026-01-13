@@ -15,6 +15,7 @@ public class Drug {
     private double unitCost;
     private String picture;
     private String description;
+    private String disease;
 
     public Drug(String name, int stock, String vendor, double unitCost) {
         this.name = name;
@@ -38,6 +39,8 @@ public class Drug {
     public double getUnitCost() { return unitCost; }
     public String getPicture() { return picture; }
     public String getDescription() {return description; }
+    public String getDisease() { return disease; }
+
     
     public void setName(String name) { this.name = name; }
     public void setStock(int stock) { this.stock = stock; }
@@ -45,4 +48,5 @@ public class Drug {
     public void setUnitCost(double unitCost) { this.unitCost = unitCost; }
     public void setPicture(String picture){ this.picture = picture; }
     public void setDescription(String description){ this.description = description;}
+    public void setDisease(String disease) { this.disease = disease; }
 }

@@ -4,7 +4,10 @@
  */
 package View;
 
+import Controller.DrugController;
 import Model.BackgroundPanel;
+import Model.History;
+import Model.SalesModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,8 +23,10 @@ public class Dashboard_Admin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Dashboard_Admin.class.getName());
     private JPanel originalDashboardContent; // To store the Over-view UI
-private Model.DrugModel drugModel = new Model.DrugModel();
-private Controller.DrugController controller = new Controller.DrugController(drugModel);
+    private Model.DrugModel drugModel = new Model.DrugModel();
+    private Controller.DrugController controller = new Controller.DrugController(drugModel);
+    private Model.SalesModel salesModel = new Model.SalesModel();
+    private Model.History historyModel = new Model.History();
 
     /**
      * Creates new form Dashboard_Admin
@@ -784,14 +789,21 @@ private void styleSidebarButtons(Color accentColor) {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
     jPanel1.removeAll();
     jPanel1.setLayout(new BorderLayout());
-    Inventory inv = new Inventory(this.controller); 
-    jPanel1.add(inv, BorderLayout.CENTER);
+    // Load the List View first, matching the image provided
+    ProductListPanel listPanel = new ProductListPanel(this.controller);
+    jPanel1.add(listPanel, BorderLayout.CENTER);
     jPanel1.revalidate();
     jPanel1.repaint();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+
+     jPanel1.removeAll();
+    // Always pass the SHARED instances
+    jPanel1.add(new HistoryPanel(controller, historyModel), BorderLayout.CENTER);
+    jPanel1.revalidate();
+    jPanel1.repaint();
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -800,14 +812,9 @@ private void styleSidebarButtons(Color accentColor) {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-    jPanel1.removeAll();
-    jPanel1.setLayout(new BorderLayout());
-    
-    // Load the List View first, matching the image provided
-    ProductListPanel listPanel = new ProductListPanel(this.controller); 
-    
-    jPanel1.add(listPanel, BorderLayout.CENTER);
-    
+   jPanel1.removeAll();
+    // Pass ALL models so the panel can navigate and store data correctly
+    jPanel1.add(new Products(controller, salesModel, historyModel), BorderLayout.CENTER);
     jPanel1.revalidate();
     jPanel1.repaint();
     }//GEN-LAST:event_jButton3ActionPerformed

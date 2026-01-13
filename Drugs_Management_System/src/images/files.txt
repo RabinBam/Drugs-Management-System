@@ -1,0 +1,16 @@
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\Amlodipine.jpg
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\Amoxicillin.jpg
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\Atorvastain.jpg
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\Azithromycin.jpg
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\basket.png
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\Cetirizine.jpg
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\files.txt
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\Ibuprofen.jpg
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\login.png
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\logo.png
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\logo3.png
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\Losartan.jpg
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\Metformin.jpg
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\money_bag.png
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\Omeprazole.jpg
+D:\Islington\Data Structure and Specialized Programming\Coursework\Codes\Drugs_Management_System\src\images\Paracetamol.jpg
