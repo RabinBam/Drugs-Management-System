@@ -7,6 +7,7 @@ import Controller.DrugController;
 import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -15,19 +16,20 @@ public class SalesPanel extends JPanel {
 
     private SalesModel salesModel;
     private DrugController controller;
-    private History historyModel; // Integration with History
+    private History historyModel;
     private JTable queueTable;
     private DefaultTableModel tableModel;
     private JLabel lblTotal;
+    private Dashboard_Admin mainDashboard;
 
-    // The constructor now requires History to ensure persistence
-    public SalesPanel(SalesModel salesModel, DrugController controller, History historyModel) {
-        this.salesModel = salesModel;
-        this.controller = controller;
-        this.historyModel = historyModel;
-        initComponents();
-        refreshTable();
-    }
+public SalesPanel(SalesModel salesModel, DrugController controller, History historyModel, Dashboard_Admin dashboard) {
+    this.salesModel = salesModel;
+    this.controller = controller;
+    this.historyModel = historyModel;
+    this.mainDashboard = dashboard; 
+    initComponents();
+    refreshTable();
+}
 
     private void initComponents() {
         setLayout(new BorderLayout(20, 20));
@@ -40,7 +42,7 @@ public class SalesPanel extends JPanel {
 
         JLabel lblTitle = new JLabel("SALES CHECKOUT QUEUE");
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        lblTitle.setForeground(new Color(0, 255, 213)); // Neon Cyan
+        lblTitle.setForeground(new Color(0, 255, 213));
 
         lblTotal = new JLabel("Total Queue Value: RS. 0.00");
         lblTotal.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -72,17 +74,21 @@ public class SalesPanel extends JPanel {
         sidebar.setPreferredSize(new Dimension(180, 0));
 
         JButton btnProcess = createSmallButton("Process Next", new Color(0, 180, 150));
+        JButton btnProcessAll = createSmallButton("Process All", new Color(0, 120, 215)); // New Button
         JButton btnPeek = createSmallButton("Peek Next", new Color(50, 100, 180));
         JButton btnClear = createSmallButton("Clear All", new Color(200, 50, 50));
         JButton btnBack = createSmallButton("Back to Products", Color.DARK_GRAY);
 
         btnProcess.addActionListener(e -> handleProcess());
+        btnProcessAll.addActionListener(e -> handleProcessAll()); // New Action
         btnPeek.addActionListener(e -> handlePeek());
         btnClear.addActionListener(e -> handleClear());
         btnBack.addActionListener(e -> navigateBack());
 
         sidebar.add(Box.createVerticalStrut(10));
         sidebar.add(btnProcess);
+        sidebar.add(Box.createVerticalStrut(10));
+        sidebar.add(btnProcessAll); // Added to UI
         sidebar.add(Box.createVerticalStrut(10));
         sidebar.add(btnPeek);
         sidebar.add(Box.createVerticalStrut(10));
@@ -93,26 +99,43 @@ public class SalesPanel extends JPanel {
         add(sidebar, BorderLayout.EAST);
     }
 
-    private void handleProcess() {
-        if (!salesModel.isSalesQueueEmpty()) {
-            // Process the FIFO queue
-            Drug processed = salesModel.processNextSale();
-            
-            // CRITICAL: Push the processed drug to the history model
-            historyModel.addSoldDrug(processed); 
-            
-            JOptionPane.showMessageDialog(this, "Success: " + processed.getName() + " processed.\nTransaction moved to History.");
-            refreshTable();
-        } else {
-            JOptionPane.showMessageDialog(this, "The queue is empty.");
+private void handleProcess() {
+    if (!salesModel.isSalesQueueEmpty()) {
+        Drug processed = salesModel.processNextSale();
+        historyModel.addSoldDrug(processed); 
+        
+        // This is the bridge that triggers the refresh
+        if (mainDashboard != null) {
+            mainDashboard.updateDashboardStats(); 
         }
+        
+        refreshTable();
     }
+}
 
+private void handleProcessAll() {
+    if (!salesModel.isSalesQueueEmpty()) {
+        List<Drug> allPending = salesModel.getAllSales();
+        for (Drug d : allPending) {
+            historyModel.addSoldDrug(d);
+        }
+        salesModel.clearSales();
+        
+        // DYNAMIC UPDATE: Refresh the dashboard stats in the background
+        if (mainDashboard != null) {
+            mainDashboard.updateDashboardStats();
+        }
+        
+        JOptionPane.showMessageDialog(this, "All items moved to History.");
+        refreshTable();
+    } else {
+        JOptionPane.showMessageDialog(this, "Nothing to process.");
+    }
+}
     private void handlePeek() {
-        // Look at the first item without removing it
         Drug next = salesModel.viewNextSale();
         if (next != null) {
-            JOptionPane.showMessageDialog(this, "Next in Queue: " + next.getName() + "\nVendor: " + next.getVendor());
+            JOptionPane.showMessageDialog(this, "Next: " + next.getName());
         } else {
             JOptionPane.showMessageDialog(this, "No items in queue.");
         }
@@ -144,27 +167,22 @@ public class SalesPanel extends JPanel {
         lblTotal.setText("Total Queue Value: RS. " + String.format("%.2f", grandTotal));
     }
 
-    private void navigateBack() {
-        Container parent = this.getParent();
-        if (parent != null) {
-            parent.removeAll();
-            parent.add(new Products(this.controller, this.salesModel, this.historyModel), BorderLayout.CENTER);
-            parent.revalidate();
-            parent.repaint();
-        }
+private void navigateBack() {
+    Container parent = this.getParent();
+    if (parent != null) {
+        parent.removeAll();
+        parent.add(new Products(this.controller, this.salesModel, this.historyModel, this.mainDashboard), BorderLayout.CENTER);
+        parent.revalidate();
+        parent.repaint();
     }
-
+}
     private void styleTable(JTable table) {
         table.setBackground(new Color(30, 35, 45));
         table.setForeground(Color.WHITE);
         table.setRowHeight(35);
-        table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        table.setSelectionBackground(new Color(0, 255, 213, 80));
-        
         JTableHeader header = table.getTableHeader();
         header.setBackground(new Color(15, 20, 25));
         header.setForeground(new Color(0, 255, 213));
-        header.setFont(new Font("Segoe UI", Font.BOLD, 14));
     }
 
     private JButton createSmallButton(String text, Color bg) {
@@ -172,8 +190,6 @@ public class SalesPanel extends JPanel {
         btn.setMaximumSize(new Dimension(170, 40));
         btn.setBackground(bg);
         btn.setForeground(Color.WHITE);
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        btn.setFocusPainted(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         return btn;
     }

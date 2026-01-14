@@ -12,6 +12,7 @@ import javax.swing.*;
  */
 public class ProductEntryForm extends javax.swing.JPanel {
     private Controller.DrugController controller;
+    private String selectedImagePath = null;
 
     /**
      * Creates new form ProductEntryForm
@@ -144,6 +145,11 @@ public final void applyGlassTheme() {
         jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
         jButton2.setText("Upload Image");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -209,45 +215,79 @@ public final void applyGlassTheme() {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-try {
+
+        try {
         String name = jTextField1.getText().trim();
         int stock = (Integer) jSpinner1.getValue();
         String vendor = jTextField2.getText().trim();
         String costText = jTextField3.getText().trim();
+        String description = jTextField4.getText().trim();
 
-        // Check for Empty Strings
+        // Validation logic
         if (name.isEmpty() || vendor.isEmpty() || costText.isEmpty()) {
             throw new IllegalArgumentException("All fields must be filled out!");
         }
-
-        // Validate Stock
         if (stock <= 0) {
             throw new IllegalArgumentException("Stock must be at least 1 unit.");
         }
-
-        // Validate Cost
         double cost = Double.parseDouble(costText);
         if (cost <= 0) {
             throw new IllegalArgumentException("Cost must be a positive number.");
         }
 
-        // If all validations pass, add to controller
+        // Add to controller (assuming your Drug model supports these fields)
         controller.addDrug(name, stock, vendor, cost);
-        JOptionPane.showMessageDialog(this, "Product Added Successfully!");
         
-        // Reset form
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jSpinner1.setValue(0);
+        JOptionPane.showMessageDialog(this, "Product '" + name + "' Added Successfully!");
+        
+        resetForm();
 
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "Invalid Price: Please enter a decimal number.", "Error", JOptionPane.ERROR_MESSAGE);
     } catch (IllegalArgumentException e) {
         JOptionPane.showMessageDialog(this, e.getMessage(), "Validation Error", JOptionPane.WARNING_MESSAGE);
     }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        chooseImage();
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void chooseImage() {
+    JFileChooser fileChooser = new JFileChooser();
+    // Filter to only show image files
+    fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+            "Image Files", "jpg", "png", "jpeg", "gif"));
+
+    int result = fileChooser.showOpenDialog(this);
+    if (result == JFileChooser.APPROVE_OPTION) {
+        java.io.File selectedFile = fileChooser.getSelectedFile();
+        selectedImagePath = selectedFile.getAbsolutePath();
+
+        // Load and scale the image to fit the label
+        ImageIcon icon = new ImageIcon(selectedImagePath);
+        Image img = icon.getImage();
+        
+        // Scale image to fit jLabel6 dimensions while maintaining quality
+        Image scaledImg = img.getScaledInstance(jLabel6.getWidth(), jLabel6.getHeight(), Image.SCALE_SMOOTH);
+        jLabel6.setIcon(new ImageIcon(scaledImg));
+        jLabel6.setText(""); // Remove "No Image" text if present
+    }
+}
+    
+    private void resetForm() {
+    jTextField1.setText("");
+    jTextField2.setText("");
+    jTextField3.setText("");
+    jTextField4.setText("");
+    jSpinner1.setValue(0);
+    jLabel6.setIcon(null); // Clear image
+    jLabel6.setText("");   // Clear any text
+    selectedImagePath = null;
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

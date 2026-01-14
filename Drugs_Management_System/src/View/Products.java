@@ -6,6 +6,9 @@ package View;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import Model.History;
+import Model.SalesModel;
+import Controller.DrugController;
 
 /**
  *
@@ -16,6 +19,7 @@ public class Products extends javax.swing.JPanel {
     private javax.swing.JButton btnGrid;
     private Model.SalesModel salesModel;
     private Model.History historyModel;
+    private Dashboard_Admin mainDashboard;
 
     /**
      * Creates new form Sales
@@ -46,15 +50,15 @@ public class Products extends javax.swing.JPanel {
        loadData(controller);
     }
     
-public Products(Controller.DrugController controller, Model.SalesModel sharedSales, Model.History sharedHistory) {
-        this.controller = controller;
-        this.salesModel = sharedSales;
-        this.historyModel = sharedHistory;
-        initComponents();
-        styleInventory();
-        loadData(controller);
-    }
-
+public Products(DrugController controller, SalesModel salesModel, History historyModel, Dashboard_Admin dashboard) {
+    this.controller = controller;
+    this.salesModel = salesModel;
+    this.historyModel = historyModel;
+    this.mainDashboard = dashboard; // Store the reference
+    initComponents();
+    styleInventory();
+    loadData(controller);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,7 +78,6 @@ public Products(Controller.DrugController controller, Model.SalesModel sharedSal
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
@@ -136,13 +139,6 @@ public Products(Controller.DrugController controller, Model.SalesModel sharedSal
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
         );
 
-        jButton4.setText("Grid View");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
         jButton5.setText("Add Sales");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,9 +164,7 @@ public Products(Controller.DrugController controller, Model.SalesModel sharedSal
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4)
-                        .addGap(32, 32, 32)
+                        .addGap(131, 131, 131)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton3))
@@ -198,7 +192,6 @@ public Products(Controller.DrugController controller, Model.SalesModel sharedSal
                     .addComponent(jButton2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3)
-                    .addComponent(jButton4)
                     .addComponent(jButton5))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -293,19 +286,6 @@ int[] selectedRows = jTable1.getSelectedRows();
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
-        Container parent = this.getParent(); 
-    if (parent != null) {
-        parent.removeAll();
-        // Switch to the Grid View
-        parent.add(new ProductGridPanel(controller, controller.getDrugs()), BorderLayout.CENTER);
-        parent.revalidate();
-        parent.repaint();
-    }
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
      
 int selectedRow = jTable1.getSelectedRow();
@@ -346,16 +326,14 @@ int selectedRow = jTable1.getSelectedRow();
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
 
-        Container parent = this.getParent();
-        if (parent != null) {
-            parent.removeAll();
-            // Pass all three shared objects to SalesPanel
-            parent.add(new SalesPanel(this.salesModel, this.controller, this.historyModel), BorderLayout.CENTER);
-            parent.revalidate();
-            parent.repaint();
-        }
-    
-        
+  Container parent = this.getParent();
+    if (parent != null) {
+        parent.removeAll();
+        // Pass the EXISTING dashboard reference to the SalesPanel
+        parent.add(new SalesPanel(this.salesModel, this.controller, this.historyModel, this.mainDashboard), BorderLayout.CENTER);
+        parent.revalidate();
+        parent.repaint();
+    }
     }//GEN-LAST:event_jButton6ActionPerformed
 
 
@@ -363,7 +341,6 @@ int selectedRow = jTable1.getSelectedRow();
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;

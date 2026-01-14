@@ -44,7 +44,7 @@ public class ProductListPanel extends javax.swing.JPanel {
         JTableHeader header = productTable.getTableHeader();
         header.setOpaque(true);
         header.setBackground(new Color(20, 25, 30));
-        header.setForeground(NEON_CYAN);
+        header.setForeground(new Color(180, 180, 180));
         header.setFont(new Font("Segoe UI", Font.BOLD, 15));
         header.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, NEON_CYAN));
 
