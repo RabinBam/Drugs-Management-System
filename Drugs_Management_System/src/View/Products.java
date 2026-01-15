@@ -297,26 +297,25 @@ int selectedRow = jTable1.getSelectedRow();
     int modelIndex = jTable1.convertRowIndexToModel(selectedRow);
     Model.Drug selectedDrug = controller.getDrugs().get(modelIndex);
 
-    // Ask for quantity
     String qtyStr = JOptionPane.showInputDialog(this, "Enter quantity to sell:", "1");
     try {
         int qty = Integer.parseInt(qtyStr);
         if (qty <= 0) throw new Exception("Quantity must be positive.");
         
         if (selectedDrug.getStock() >= qty) {
-            // Update the stock in the controller
-            int newStock = selectedDrug.getStock() - qty;
-            controller.editDrug(modelIndex, selectedDrug.getName(), newStock, selectedDrug.getVendor(), selectedDrug.getUnitCost());
+            // FIX: Instead of calling controller.editDrug (which might create a new object without a picture),
+            // simply update the stock on the existing object that already has the picture path.
+            selectedDrug.setStock(selectedDrug.getStock() - qty);
             
-            // Add multiple instances to the Sales Model
+            // Add to Sales Model
             for (int i = 0; i < qty; i++) {
                 salesModel.addToSales(selectedDrug);
             }
             
-            loadData(controller); // Refresh the table to show new stock
+            loadData(controller); // Refresh Table
             JOptionPane.showMessageDialog(this, qty + " units of " + selectedDrug.getName() + " added to sales queue.");
         } else {
-            JOptionPane.showMessageDialog(this, "Not enough stock! Available: " + selectedDrug.getStock());
+            JOptionPane.showMessageDialog(this, "Not enough stock!");
         }
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Invalid quantity.");

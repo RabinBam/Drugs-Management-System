@@ -184,14 +184,17 @@ private JPanel createStyledCard(String title, JLabel valueLabel) {
     return card;
 }
 private JPanel createPaymentPanel() {
-        JPanel panel = createGlassPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setBorder(BorderFactory.createTitledBorder("Sales Distribution"));
-        
-        // Add the global component instead of a local one
-        panel.add(pieChartComponent, BorderLayout.CENTER);
-        return panel;
-    }
+    JPanel panel = createGlassPanel();
+    panel.setLayout(new BorderLayout());
+    panel.setBorder(BorderFactory.createCompoundBorder(
+        BorderFactory.createTitledBorder(null, "Sales Distribution", 0, 0, 
+            new Font("Segoe UI", Font.BOLD, 14), Color.WHITE),
+        BorderFactory.createEmptyBorder(20, 10, 20, 10) 
+    ));
+    
+    panel.add(pieChartComponent, BorderLayout.CENTER);
+    return panel;
+}
 
 @Override
 public void setVisible(boolean b) {
@@ -242,8 +245,8 @@ private JPanel createCalendarPanel() {
     JPanel panel = createGlassPanel();
     panel.setLayout(new BorderLayout());
     
-    // Get current month and year
     java.util.Calendar cal = new java.util.GregorianCalendar();
+    int today = cal.get(java.util.Calendar.DAY_OF_MONTH); // Get today's date
     String monthName = new java.text.SimpleDateFormat("MMMM YYYY").format(cal.getTime());
     
     panel.setBorder(BorderFactory.createTitledBorder(null, monthName, 
@@ -273,10 +276,29 @@ private JPanel createCalendarPanel() {
         model.addRow(rowData);
     }
 
-    styleTable(calendarTable); // Applies white font
+    styleTable(calendarTable); 
+
+    // --- NEW: Highlight Today's Date ---
+    calendarTable.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, 
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            setHorizontalAlignment(JLabel.CENTER);
+            if (value != null && value.toString().equals(String.valueOf(today))) {
+                c.setForeground(new Color(0, 255, 213)); // Your accent teal
+                c.setFont(c.getFont().deriveFont(Font.BOLD));
+            } else {
+                c.setForeground(Color.WHITE);
+            }
+            return c;
+        }
+    });
+
     JScrollPane scroll = new JScrollPane(calendarTable);
     scroll.setOpaque(false);
     scroll.getViewport().setOpaque(false);
+    scroll.setBorder(BorderFactory.createEmptyBorder()); // Remove scroll border
     panel.add(scroll, BorderLayout.CENTER);
     return panel;
 }
@@ -755,8 +777,8 @@ public void updateDashboardStats() {
         
         // Creating dynamic labels for the legend
         String[] labelsWithValues = {
-            "Completed: " + completedCount, 
-            "In Queue: " + pending
+            "Done: " + completedCount, 
+            "Queue: " + pending
         };
         
         pieChartComponent.setData(
@@ -773,10 +795,7 @@ private void styleTable(JTable table) {
     table.setRowHeight(30);
     table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
     table.setGridColor(new Color(0, 255, 213, 50));
-    
-    // --- UPDATE THESE LINES ---
     table.getTableHeader().setBackground(new Color(15, 20, 25));
-    // Use a light grey (180, 180, 180) for a "faded white" look
     table.getTableHeader().setForeground(new Color(180, 180, 180)); 
     table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
     

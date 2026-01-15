@@ -134,10 +134,10 @@ public class ProductListPanel extends javax.swing.JPanel {
             updateView();
         });
 
-        JButton btnViewToggle = createVibrantButton("GRID VIEW ⊞");
+        JButton btnViewToggle = createVibrantButton("GRID VIEW ");
         btnViewToggle.addActionListener(e -> {
             isGridView = !isGridView;
-            btnViewToggle.setText(isGridView ? "LIST VIEW ≡" : "GRID VIEW ⊞");
+            btnViewToggle.setText(isGridView ? "LIST VIEW ≡" : "GRID VIEW ");
             updateView();
         });
 

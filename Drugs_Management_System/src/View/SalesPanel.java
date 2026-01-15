@@ -171,7 +171,8 @@ private void navigateBack() {
     Container parent = this.getParent();
     if (parent != null) {
         parent.removeAll();
-        parent.add(new Products(this.controller, this.salesModel, this.historyModel, this.mainDashboard), BorderLayout.CENTER);
+        Products productsPanel = new Products(this.controller, this.salesModel, this.historyModel, this.mainDashboard);
+        parent.add(productsPanel, BorderLayout.CENTER);
         parent.revalidate();
         parent.repaint();
     }
