@@ -71,7 +71,14 @@ private void applyTheme() {
     });
 }
 
-    
+/**
+ * Applies a custom dark-theme style to a JTextField.
+ * Sets background, text color, caret color, and applies a titled border
+ * with the given title and consistent font and color styling.
+ *
+ * @param field the JTextField to apply styling to
+ * @param title the title text to display on the field's border
+ */    
 private void styleTextField(javax.swing.JTextField field, String title) {
     field.setBackground(new java.awt.Color(31, 41, 55)); // Dark input
     field.setForeground(java.awt.Color.WHITE);

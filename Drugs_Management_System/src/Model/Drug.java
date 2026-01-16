@@ -23,6 +23,16 @@ public class Drug {
         this.vendor = vendor;
         this.unitCost = unitCost;
     }
+  /**
+ * Constructs a Drug object with the specified details.
+ *
+ * @param name the name of the drug
+ * @param stock the available quantity in stock
+ * @param vendor the vendor or supplier of the drug
+ * @param unitCost the cost per unit of the drug
+ * @param picture the file path or URL of the drug's image
+ * @param description a brief description of the drug
+ */
     
     public Drug(String name, int stock, String vendor, double unitCost, String picture, String description) {
         this.name = name;

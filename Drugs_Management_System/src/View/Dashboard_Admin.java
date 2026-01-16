@@ -142,7 +142,14 @@ private JPanel createGlassPanel() {
         }
     };
 }
-
+/**
+ * Creates and returns the summary panel displaying key sales metrics.
+ * Initializes sales and earnings labels if they have not been created,
+ * arranges styled summary cards in a horizontal layout, and returns
+ * the container panel.
+ *
+ * @return a JPanel containing the sales and earning summary cards
+ */
 private JPanel createSummaryPanel() {
     JPanel container = new JPanel(new GridLayout(1, 2, 10, 0));
     container.setOpaque(false);
@@ -157,6 +164,16 @@ private JPanel createSummaryPanel() {
 
     return container;
 }
+/**
+ * Creates and returns a styled summary card panel.
+ * Configures a card layout with a title and a dynamic value label,
+ * applies consistent fonts, colors, and borders, and displays
+ * the provided label for real-time updates.
+ *
+ * @param title the title text displayed at the top of the card
+ * @param valueLabel the JLabel used to display the dynamic value
+ * @return a JPanel representing a styled summary card
+ */
 
 private JPanel createStyledCard(String title, JLabel valueLabel) {
     JPanel card = new JPanel();
@@ -183,6 +200,14 @@ private JPanel createStyledCard(String title, JLabel valueLabel) {
 
     return card;
 }
+/**
+ * Creates and returns the payment panel displaying sales distribution.
+ * Sets up a glass-style panel with a titled border, applies padding,
+ * and embeds the pie chart component at the center.
+ *
+ * @return a JPanel containing the sales distribution chart
+ */
+
 private JPanel createPaymentPanel() {
     JPanel panel = createGlassPanel();
     panel.setLayout(new BorderLayout());
@@ -218,6 +243,14 @@ public void setVisible(boolean b) {
     }
     super.setVisible(b);
 }
+/**
+ * Creates and returns the top sales panel used to display inventory performance.
+ * Initializes the panel layout, title border, and ensures the sales table is
+ * created only once to preserve data. Wraps the persistent table in a scroll
+ * pane and applies consistent styling.
+ *
+ * @return a JPanel containing the inventory performance table
+ */
 
 private JPanel createTopSalesPanel() {
     JPanel panel = createGlassPanel();
@@ -241,6 +274,15 @@ private JPanel createTopSalesPanel() {
     
     return panel;
 }
+/**
+ * Creates and returns a calendar panel displaying the current month.
+ * Builds a calendar table with weekday headers, populates it with the
+ * correct dates, applies consistent table styling, and highlights
+ * the current day for visual emphasis.
+ *
+ * @return a JPanel containing the monthly calendar view
+ */
+
 private JPanel createCalendarPanel() {
     JPanel panel = createGlassPanel();
     panel.setLayout(new BorderLayout());
@@ -308,6 +350,11 @@ private void refreshPanel() {
     jPanel1.revalidate();
     jPanel1.repaint();
 }
+/**
+ * Applies a dark theme and consistent styling to the sidebar panel.
+ * Sets the background color of the main sidebar, makes inner panels
+ * transparent, and styles all buttons with a uniform font and text color.
+ */
 
 private void styleSidebar() {
     dashboard_Sidepannel.setBackground(new Color(15, 20, 25)); // Dark sidebar
@@ -320,12 +367,19 @@ private void styleSidebar() {
                     JButton btn = (JButton) inner;
                     btn.setFont(new Font("Segoe UI", Font.PLAIN, 16));
                     btn.setForeground(new Color(200, 200, 200));
-                    // Add mouse listener for hover effect if you want extra interaction
+                    
                 }
             }
         }
     }
 }
+/**
+ * Styles all buttons directly contained in the sidebar panel.
+ * Applies a uniform font, text color, padding, alignment, and removes
+ * default focus and content area visuals for a clean, modern look.
+ *
+ * @param accentColor the accent color intended for button highlights (currently not applied)
+ */
 
 private void styleSidebarButtons(Color accentColor) {
     for (Component c : dashboard_Sidepannel.getComponents()) {
@@ -337,8 +391,7 @@ private void styleSidebarButtons(Color accentColor) {
             btn.setContentAreaFilled(false);
             btn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 10));
             btn.setHorizontalAlignment(SwingConstants.LEFT);
-            
-            // Hover effect logic can be added here
+           
         }
     }
 }

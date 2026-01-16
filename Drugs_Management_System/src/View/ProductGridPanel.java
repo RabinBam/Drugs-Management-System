@@ -121,15 +121,25 @@ public class ProductGridPanel extends JPanel {
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btn.setBorder(BorderFactory.createEmptyBorder(8, 0, 8, 0));
     }
+/**
+ * Navigates from the product list to the detailed view of a selected drug.
+ * Replaces the center panel content with an ItemDetail panel, passing
+ * the selected drug, the controller, and a reference to the parent panel.
+ *
+ * @param drug the Drug object whose details are to be displayed
+ */
 
-    private void navigateToDetails(Drug drug) {
-        // Find the "centerPanel" container by looking up the component hierarchy
-        Container parent = this.getParent(); 
-        if (parent != null) {
+   private void navigateToDetails(Drug drug) {
+    Container parent = this.getParent(); // This is 'centerPanel'
+    if (parent != null) {
+        Container mainListPanel = parent.getParent(); // This is 'ProductListPanel'
+        if (mainListPanel instanceof ProductListPanel) {
             parent.removeAll();
-            parent.add(new ItemDetail(drug, controller), BorderLayout.CENTER);
+            // Pass 'drug', 'controller', and the 'mainListPanel' reference
+            parent.add(new ItemDetail(drug, controller, (ProductListPanel)mainListPanel), BorderLayout.CENTER);
             parent.revalidate();
             parent.repaint();
         }
     }
+}
 }

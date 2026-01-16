@@ -15,9 +15,6 @@ public class DrugModel {
 
     public DrugModel() {
         this.drugList = new ArrayList<>();
-
-       
-
         drugList.add(new Drug(
                 "Amoxicillin",
                 45,

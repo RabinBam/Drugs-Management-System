@@ -32,7 +32,12 @@ public class ProductListPanel extends javax.swing.JPanel {
         applyMedicalTheme();
         updateView(); // Populates data immediately on load
     }
-
+/**
+ * Applies a custom medical-themed dark style to the panel and product table.
+ * Configures background colors, fonts, and high-contrast table styling.
+ * Alternates row colors for readability, customizes selection colors,
+ * and styles the table header for a modern, clean look.
+ */
     private void applyMedicalTheme() {
         this.setOpaque(true);
         this.setBackground(DEEP_BACKGROUND);
@@ -173,8 +178,14 @@ public class ProductListPanel extends javax.swing.JPanel {
         add(headerContainer, BorderLayout.NORTH);
         add(centerPanel, BorderLayout.CENTER);
     }
+/**
+ * Updates the main view based on the current search input.
+ * Performs a binary search on the drug list to filter results, then
+ * refreshes the center panel to display either a grid or table view
+ * of the filtered products.
+ */
 
-    private void updateView() {
+    public void updateView() {
         // Integrated Binary Search from your Controller
         ArrayList<Drug> filteredList = SearchController.binarySearchByName(
             controller.getDrugs(), searchField.getText());
@@ -190,6 +201,13 @@ public class ProductListPanel extends javax.swing.JPanel {
         centerPanel.revalidate();
         centerPanel.repaint();
     }
+/**
+ * Refreshes the product table with the provided list of drugs.
+ * Clears existing rows and repopulates the table with updated
+ * information including name, stock, vendor, and unit cost.
+ *
+ * @param list the ArrayList of Drug objects to display in the table
+ */
 
     private void refreshTableData(ArrayList<Drug> list) {
         DefaultTableModel model = (DefaultTableModel) productTable.getModel();

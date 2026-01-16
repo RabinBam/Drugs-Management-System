@@ -21,11 +21,26 @@ public class ProductEntryForm extends javax.swing.JPanel {
         initComponents();
         applyGlassTheme();
     }
+ /**
+ * Constructs a ProductEntryForm with the given DrugController.
+ * Initializes GUI components and applies the glass-themed styling
+ * to the form.
+ *
+ * @param controller the DrugController used to manage product data
+ */
+
 public ProductEntryForm(Controller.DrugController controller) {
         this.controller = controller; // Assign the controller
         initComponents();
         applyGlassTheme();
     }
+/**
+ * Applies a glass-themed style to the ProductEntryForm.
+ * Sets semi-transparent backgrounds, styles the title, internal panels,
+ * labels, and the submit button with consistent fonts and accent colors
+ * for a modern, translucent UI appearance.
+ */
+
 public final void applyGlassTheme() {
     this.setOpaque(false);
     Color cyan = new Color(0, 255, 255);

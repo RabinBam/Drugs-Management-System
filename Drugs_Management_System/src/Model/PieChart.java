@@ -26,6 +26,15 @@ public class PieChart extends JPanel {
     }
 
     @Override
+    /**
+ * Custom paint method for rendering a pie chart with legend.
+ * Draws each segment proportionally based on the values array,
+ * applies corresponding colors, and displays a labeled legend with counts.
+ * Handles empty data by drawing a placeholder circle.
+ *
+ * @param g the Graphics context used for drawing
+ */
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (values == null || values.length == 0) return;

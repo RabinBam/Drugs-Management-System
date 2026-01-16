@@ -32,7 +32,7 @@ public class HistoryPanel extends JPanel {
         lblHeader.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         add(lblHeader, BorderLayout.NORTH);
 
-        String[] columnNames = {"Drug Name", "Unit Cost", "Category/Disease", "Vendor"};
+        String[] columnNames = {"Drug Name", "Unit Cost", "Quantity", "Vendor"};
         tableModel = new DefaultTableModel(columnNames, 0);
         historyTable = new JTable(tableModel);
         
@@ -59,7 +59,7 @@ public class HistoryPanel extends JPanel {
         });
 
         // Undo Button (Pop from Stack)
-        JButton btnUndo = new JButton("Undo Last Sale");
+        JButton btnUndo = new JButton("Remove Last Sale");
         btnUndo.addActionListener(e -> {
     if (!historyModel.isEmpty()) {
         historyModel.undoLastSale();
@@ -85,8 +85,14 @@ public class HistoryPanel extends JPanel {
         southPanel.add(btnClear);
         add(southPanel, BorderLayout.SOUTH);
     }
+/**
+ * Refreshes the sales history table by aggregating sold drugs.
+ * Groups entries by drug name, calculates total cost per drug,
+ * counts quantities, and updates the table with name, total cost,
+ * quantity, and vendor. Ensures the table font color is set to white for readability.
+ */
 
-   public void refreshHistoryTable() {
+ public void refreshHistoryTable() {
     tableModel.setRowCount(0);
     java.util.ArrayList<Model.Drug> historyList = historyModel.getHistoryStack().getAll();
 
@@ -99,18 +105,20 @@ public class HistoryPanel extends JPanel {
         drugData.put(d.getName(), d);
     }
 
-    // Set Font to White as requested
+    // Set Font to White
     historyTable.setForeground(Color.WHITE);
 
     // Add grouped rows to table
     for (String name : counts.keySet()) {
         Model.Drug d = drugData.get(name);
         int qty = counts.get(name);
+        
+        // FIX: Ensure the columns match {"Drug Name", "Unit Cost", "Quantity", "Vendor"}
         tableModel.addRow(new Object[]{
-            name + " (x" + qty + ")", 
-            "RS. " + (d.getUnitCost() * qty), // Total cost for this group
-            d.getDisease(), 
-            d.getVendor()
+            name,                                 // Column 0: Name
+            "RS. " + (d.getUnitCost() * qty),     // Column 1: Total Cost (Unit * Qty)
+            qty,                                  // Column 2: QUANTITY (Fixed here)
+            d.getVendor()                         // Column 3: Vendor
         });
     }
 }

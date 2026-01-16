@@ -98,6 +98,11 @@ public SalesPanel(SalesModel salesModel, DrugController controller, History hist
 
         add(sidebar, BorderLayout.EAST);
     }
+/**
+ * Processes the next sale in the sales queue.
+ * Moves the drug from the queue to the sales history, updates the
+ * main dashboard statistics if available, and refreshes the sales table.
+ */
 
 private void handleProcess() {
     if (!salesModel.isSalesQueueEmpty()) {
@@ -112,6 +117,12 @@ private void handleProcess() {
         refreshTable();
     }
 }
+/**
+ * Processes all pending sales in the sales queue.
+ * Transfers all drugs to the sales history, clears the queue,
+ * updates the main dashboard statistics if available, refreshes the table,
+ * and notifies the user of the action. Displays a message if the queue is empty.
+ */
 
 private void handleProcessAll() {
     if (!salesModel.isSalesQueueEmpty()) {
@@ -145,6 +156,11 @@ private void handleProcessAll() {
         salesModel.clearSales();
         refreshTable();
     }
+/**
+ * Refreshes the sales table with the latest data from the sales model.
+ * Aggregates quantities of each drug, calculates subtotals and the grand total,
+ * updates the table rows, and displays the total queue value.
+ */
 
     private void refreshTable() {
         tableModel.setRowCount(0);
@@ -177,14 +193,19 @@ private void navigateBack() {
         parent.repaint();
     }
 }
-    private void styleTable(JTable table) {
-        table.setBackground(new Color(30, 35, 45));
-        table.setForeground(Color.WHITE);
-        table.setRowHeight(35);
-        JTableHeader header = table.getTableHeader();
-        header.setBackground(new Color(15, 20, 25));
-        header.setForeground(new Color(0, 255, 213));
-    }
+private void styleTable(JTable table) {
+    // Table Body Styling
+    table.setBackground(new Color(30, 35, 45));
+    table.setForeground(new Color(255, 255, 255, 180)); // Faded white text
+    table.setRowHeight(35);
+    table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+    table.setGridColor(new Color(60, 70, 80)); // Subtle grid lines
+    JTableHeader header = table.getTableHeader();
+    header.setBackground(new Color(15, 20, 25)); // Darker background for contrast
+    header.setForeground(Color.WHITE); 
+    header.setFont(new Font("Segoe UI", Font.BOLD, 14));
+    header.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(0, 255, 213, 100)));
+}
 
     private JButton createSmallButton(String text, Color bg) {
         JButton btn = new JButton(text);

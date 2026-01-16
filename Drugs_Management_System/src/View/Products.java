@@ -34,6 +34,14 @@ public class Products extends javax.swing.JPanel {
         jScrollPane1.getViewport().setOpaque(false);
     }
 
+    /**
+ * Loads drug data into the table from the provided controller.
+ * Clears any existing rows and populates the table with the current
+ * list of drugs, including name, stock, vendor, and unit cost.
+ *
+ * @param controller the DrugController providing access to the drug list
+ */
+
     public void loadData(Controller.DrugController controller) {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0); // Clear dummy rows
@@ -198,7 +206,7 @@ public Products(DrugController controller, SalesModel salesModel, History histor
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
+//update button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int selectedRow = jTable1.getSelectedRow();
     
@@ -234,7 +242,7 @@ public Products(DrugController controller, SalesModel salesModel, History histor
         JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Validation Error", JOptionPane.WARNING_MESSAGE);
     }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+//Delete
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 int[] selectedRows = jTable1.getSelectedRows();
     
@@ -285,7 +293,7 @@ int[] selectedRows = jTable1.getSelectedRows();
     }
         
     }//GEN-LAST:event_jButton3ActionPerformed
-
+//Add to Sales
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
      
 int selectedRow = jTable1.getSelectedRow();
